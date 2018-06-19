@@ -1,0 +1,44 @@
+include "basic_element.fbs";
+include "material.fbs";
+
+namespace CVF;
+
+/*
+if (node.children) {
+  type = Assembly;
+} else if (node.instanceId) {
+  type = Instance;
+} else {
+  type = Part;
+}
+*/
+
+table ProductStructureSegment {
+  id:int;
+  root:ProductStructure (Required);
+  properties:[Property];
+}
+
+table ProductStructure {
+    // name of this node
+    title:string;
+    // id of this node or id of instanced node if instanceId is not null
+    // two nodes cannot have the same id
+    id:int (Required);
+    // unit of this node
+    units:int;
+    // bounding box of this node
+    bbox:BoundingBox3;
+    // child nodes, which are also ProductStructure
+    children:[ProductStructure];
+    // transform of this node
+    xform:Matrix4;
+    // if this node is type of Instance, this value will be set
+    instanceId:int;
+    // material of this node
+    material:Material;
+    // user defined data
+    properties:[Property];
+}
+
+root_type ProductStructureSegment;

@@ -1,0 +1,48 @@
+include "basic_element.fbs";
+namespace CVF;
+
+
+table Int8BufferAttributeData {
+    data:[byte] (Required);
+}
+
+table Int32BufferAttributeData {
+    data:[int] (Required);
+}
+
+table UInt32BufferAttributeData {
+    data:[uint] (Required);
+}
+
+table Float32BufferAttributeData {
+    data:[float] (Required);
+}
+
+table Float64BufferAttributeData {
+    data:[double] (Required);
+}
+
+union BufferAttributeData {
+    Int8BufferAttributeData,
+    Int32BufferAttributeData,
+    UInt32BufferAttributeData,
+    Float32BufferAttributeData,
+    Float64BufferAttributeData
+}
+
+
+/*
+ * built-in attribute names are:
+ * position:
+ * normal:
+ * uv:
+ * color:
+ * control_point: curved triangle control point.
+ */
+table BufferAttribute {
+    name:string (Required);
+    item_size:int (Required);
+    data:BufferAttributeData (Required);
+}
+
+root_type BufferAttribute;

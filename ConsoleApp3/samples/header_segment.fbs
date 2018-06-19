@@ -1,0 +1,35 @@
+include "property_segment.fbs";
+include "basic_element.fbs";
+
+namespace CVF;
+
+table HeaderSegment {
+    // the human readable format name, such as "PLMBOD"
+    name:string;
+    // the uuid of loader to handle this format
+    uuid:string;
+    // version info
+    base_major_version:short = 0 (Required);
+    base_minor_version:int = 1 (Required);
+    major_version:short = 8 (Required);
+    minor_version:int = 20170426 (Required);
+    // info of other segments
+    segments:[Segment] (Required);
+    // user defined data
+    properties:[Property];
+}
+
+table Segment {
+    // name of segment. 
+    // For pre-defined segment, this name should use name of schema.
+    // such as "CVF::ProductStructrue", "CVF::TopoMesh" and so on.
+    // For user-defined segment, we recommend you also use the same
+    // pattern, like "YourNamespace::TableName"
+    name:string (Required);
+    // offset of the segment, respect to first byte of the message
+    offset:uint (Required);
+    // total bytes of this segment
+    count:uint (Required);
+}
+
+root_type HeaderSegment;

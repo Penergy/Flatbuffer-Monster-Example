@@ -1,0 +1,49 @@
+include "basic_element.fbs";
+namespace CVF;
+
+/*--------------+-------------------------
+    type value  | data in Property.data
+    0           | json text
+    1           | flatbuffer binary
+    2-19        | reserved
+    20          | byte(int8)
+    21          | ubyte(uint8)
+    22          | short(int16)
+    23          | ushort(uint16)
+    24          | int(int32)
+    25          | uint(uint32)
+    26          | float(float32)
+    27          | long(int64)
+    28          | ulong(uint64)
+    29          | double(float64)
+    30          | byte(int8) array
+    31          | ubyte(uint8) array
+    32          | short(int16) array
+    33          | ushort(uint16) array
+    34          | int(int32) array
+    35          | uint(uint32) array
+    36          | float(float32) array
+    37          | long(int64) array
+    38          | ulong(uint64) array
+    39          | double(float64) array
+    (40)        | user defined structure
+----------------+-----------------------*/
+table Property {
+    // name of property
+    // If the type is flatbuffer, this name should use name of schema.
+    // such as "CVF::ProductStructrue", "CVF::TopoMesh" and so on.
+    // For user-defined flatbuffer, we recommend you also use the same
+    // pattern, like "YourNamespace::TableName"
+    name:string (Required);
+    // refer to the table above
+    type:ubyte (Required);
+    data:[ubyte] (Required);
+}
+
+table PropertySegment {
+    // id of product structure node
+    id:int (Required);
+    properties:[Property] (Required);
+}
+
+root_type PropertySegment;

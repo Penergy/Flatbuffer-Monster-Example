@@ -1,0 +1,46 @@
+namespace CVF;
+
+attribute "Required";
+
+struct Vector3 {
+    x:float;
+    y:float;
+    z:float;
+}
+
+struct Color {
+    red:ubyte;
+    green:ubyte;
+    blue:ubyte;
+    alpha:ubyte;
+}
+
+struct Vector2 {
+    u:float;
+    v:float;
+}
+
+struct BoundingBox3 {
+    min:Vector3;
+    max:Vector3;
+}
+
+struct BoundingBox2 {
+    min:Vector2;
+    max:Vector2;
+}
+
+table Matrix4 {
+    mat:[float] (Required);
+}
+
+table Matrix3 {
+    mat:[float] (Required);
+}
+
+struct Quaternion {
+    x:float;
+    y:float;
+    z:float;
+    w:float;
+}

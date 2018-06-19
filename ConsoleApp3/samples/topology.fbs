@@ -1,0 +1,63 @@
+include "material.fbs";
+include "property_segment.fbs";
+include "basic_element.fbs";
+namespace CVF;
+
+table Body {
+    edit_type:byte (Required);
+    // body id shall be unique within a part.
+    // all ids within a body shall be unique.
+    id:int (Required);
+    material:Material;
+    bbox:BoundingBox3;
+    faces:[Face] (Required);
+    edges:[Edge];
+    edge_faces_map:[EdgeFacePair];
+    // if the vertex is not in the pool, 
+    // append it to vertex pool
+    keypoints:[Vertex];
+
+    edge_indices:[int];
+    keypoint_indices:[int];
+
+    properties:[Property];
+}
+
+table EdgeFacePair {
+    edge_id:int (Required);
+    face_ids:[int] (Required);
+}
+
+// edit_type: null-none, 1-created, 2-modified, 3-deleted
+table Vertex {
+    edit_type:byte (Required);
+    id:int (Required);
+    material:Material;
+    properties:[Property];
+}
+
+table Face {
+    edit_type:byte (Required);
+    id:int (Required);
+    material:Material;
+    bbox:BoundingBox3;
+    // for tri-strip case, a face may have serveral tri-strips
+    index_span:[IndexSpan];
+    properties:[Property];
+}
+
+table Edge {
+    edit_type:byte (Required);
+    id:int (Required);
+    material:Material;
+    bbox:BoundingBox3;
+    index_span:IndexSpan;
+    properties:[Property];
+}
+
+struct IndexSpan {
+    start:int;
+    count:int;
+}
+
+root_type Body;

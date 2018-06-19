@@ -1,0 +1,49 @@
+include "property_segment.fbs";
+include "basic_element.fbs";
+
+namespace CVF;
+
+union MaterialType {
+    Phong,
+    Flat,
+    Texture,
+    LineMaterial,
+    PointMaterial,
+    CustomMaterial
+}
+
+table Material {
+    mat:MaterialType (Required);
+}
+
+table Phong {
+    diffuse:Color (Required);
+    emissive:Color (Required);
+    specular:Color (Required);
+    shininess:float (Required);
+}
+
+table Flat {
+    color:Color (Required);
+}
+
+table Texture {
+    tex:[ubyte] (Required);
+}
+
+table LineMaterial {
+    color:Color (Required);
+    line_width:float (Required);
+    line_type:byte (Required);     //  1:solid line 2:dashed line
+}
+
+table PointMaterial {
+    color:Color (Required);
+    size:float (Required);
+}
+
+table CustomMaterial {
+    properties:[Property] (Required);
+}
+
+root_type Material;

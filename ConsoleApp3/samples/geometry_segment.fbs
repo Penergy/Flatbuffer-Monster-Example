@@ -1,0 +1,81 @@
+include "basic_element.fbs";
+include "property_segment.fbs";
+
+namespace CVF;
+
+table GeometrySegment {
+    // product structure id.
+    ps_id:int (Required);
+    body_id:int (Required);
+    geometries:[Geometry] (Required);
+    properties:[Property];
+}
+
+union GeometryType {
+    Plane,
+    Cylinder,
+    Cone,
+    Sphere,
+    Torus,
+    Line,
+    Circle,
+    Ellipse
+}
+
+
+// vector of union is just supported in C++ experimentally
+// so use a table to wrap union
+table Geometry {
+    entity_ids:[int] (Required);
+    geo: GeometryType (Required);
+}
+
+table Plane {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+}
+
+table Cylinder {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+    radius:float (Required);
+}
+
+table Cone {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+    radius:float (Required);
+    half_angle:float (Required);
+}
+
+table Sphere {
+    origin:Vector3 (Required);
+    radius:float (Required);
+}
+
+table Torus {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+    major_radius:float (Required);
+    minor_radius:float (Required);
+}
+
+table Line {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+}
+
+table Circle {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+    radius:float (Required);
+}
+
+table Ellipse {
+    origin:Vector3 (Required);
+    axis:Vector3 (Required);
+    major_radius:float (Required);
+    minor_radius:float (Required);
+}
+
+root_type GeometrySegment;

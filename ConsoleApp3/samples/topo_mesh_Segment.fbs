@@ -1,0 +1,39 @@
+include "buffer_attribute.fbs";
+include "property_segment.fbs";
+include "topology.fbs";
+
+namespace CVF;
+
+//============MeshBuffer=============//
+table MeshBuffer {
+    // type of mesh
+    // 1: Triangle List.
+    // 2: Triangle Strip.
+    // 3: Line Strip.
+    // 4: Curved Triangle.
+    // 5: Curved Line.
+    // 6: Point Cloud.
+    mesh_type:byte (Required);
+    // normal_pool:[float32];
+    // vertex_pool:[float32];
+    // vertex_color_pool:[float32];
+    // uv_coordinates_pool:[float32];
+    indices:[uint];
+    buffer_attributes:[BufferAttribute] (Required);
+
+    properties:[Property];
+}
+
+table TopoMeshSegment {
+    // id of the product structure node to which this TopoMesh belongs
+    node_id:int (Required);
+    // topology info of the body
+    // indices in Body are referencing to the array in MeshBuffer
+    body:Body;
+    // mesh data
+    mesh:MeshBuffer (Required);
+    // user defined data
+    properties:[Property];
+}
+
+root_type TopoMeshSegment;
